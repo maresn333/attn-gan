@@ -1,0 +1,64 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2511
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red51\green110\blue109;\red239\green239\blue239;\red49\green49\blue49;
+\red15\green112\blue1;}
+{\*\expandedcolortbl;;\cssrgb\c25098\c50196\c50196;\cssrgb\c94902\c94902\c94902;\cssrgb\c25098\c25098\c25098;
+\cssrgb\c0\c50196\c0;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs24 \cf2 \cb3 \expnd0\expndtw0\kerning0
+# Specify the version of the runway.yml spec.\cf4 \
+\pard\pardeftab720\partightenfactor0
+\cf5 version\cf4 : 0.1\
+\pard\pardeftab720\partightenfactor0
+\cf2 # Supported python versions are 2.7 and 3.6\cf4 \
+\pard\pardeftab720\partightenfactor0
+\cf5 python\cf4 : 3.6\
+\pard\pardeftab720\partightenfactor0
+\cf2 # The command to run your model. This value is used as the CMD value in\cf4 \
+\cf2 # the generated Docker image.\cf4 \
+\pard\pardeftab720\partightenfactor0
+\cf5 entrypoint\cf4 : python runway_model.py\
+\pard\pardeftab720\partightenfactor0
+\cf2 # Which NVIDIA CUDA version to use. Supported versions include 10, 9.2, and 9.\cf4 \
+\pard\pardeftab720\partightenfactor0
+\cf5 cuda\cf4 : 9.2\
+\pard\pardeftab720\partightenfactor0
+\cf2 # Which ML framework would you like to pre-install? The appropriate GPU/CPU\cf4 \
+\cf2 # versions of these libraries are selected automatically. Accepts values\cf4 \
+\cf2 # "tensorflow" and "pytorch", installinv Tensorflow v1.12 and Pytorch v1.0\cf4 \
+\cf2 # respectively.\cf4 \
+\pard\pardeftab720\partightenfactor0
+\cf5 framework\cf4 : tensorflow\
+\pard\pardeftab720\partightenfactor0
+\cf2 # Builds are created for CPU and GPU environments by default. You can use the\cf4 \
+\cf2 # spec object to limit your builds to one environment if you'd like, for\cf4 \
+\cf2 # instance if your model doesn't use CUDA or run on a GPU you can set\cf4 \
+\cf2 # gpu: False.\cf4 \
+\pard\pardeftab720\partightenfactor0
+\cf5 spec\cf4 :\
+    \cf5 cpu\cf4 : True\
+    \cf5 gpu\cf4 : True\
+\cf5 files\cf4 :\
+    \cf2 # All files in the root project directory will be copied to the Docker image\cf4 \
+    \cf2 # automatically. Builds that require excessive storage can fail or take a\cf4 \
+    \cf2 # very long time to install on another user's machine. You can use the\cf4 \
+    \cf2 # files.ignore array to exclude files from your build.\cf4 \
+    \cf5 ignore\cf4 :\
+        - my_dataset/*\
+        - secrets.txt\
+\pard\pardeftab720\partightenfactor0
+\cf2 # The build_steps array allows you to run shell commands at build time. Each\cf4 \
+\cf2 # Each build step is executed in the order it appears in the array.\cf4 \
+\pard\pardeftab720\partightenfactor0
+\cf5 build_steps\cf4 :\
+    \cf2 # We recommend pinning to a specific version of the Runway Model SDK until\cf4 \
+    \cf2 # the first major release, as breaking changes may be introduced to the SDK\cf4 \
+    - pip install runway-python==0.0.74\
+    - pip install -r requirements.txt\
+    \cf2 # The if_gpu and if_cpu directives can be used to run build steps\cf4 \
+    \cf2 # conditionally depending on the build environment.\cf4 \
+    - \cf5 if_gpu\cf4 : echo "Building in a GPU environment..."\
+    - \cf5 if_cpu\cf4 : echo "Building in a CPU only environment..."}
